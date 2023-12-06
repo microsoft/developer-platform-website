@@ -1,11 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-export interface ProviderAuth {
-    authorizationUri: string;
-    realm: string;
-    scopes: [string];
-}
+import { ProviderAuth } from '@developer-platform/entities';
 
 const getWwwAuthParam = (param: string): { key: string; value: string } | undefined => {
     const parts = param

@@ -1,0 +1,86 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - '.vscode/**'
+      - 'docs/**'
+      - 'tools/**'
+      - '**/*.md'
+      - '*.code-workspace'
+
+env:
+  IMAGE_REGISTRY: ${{ vars.REGISTRY_URL || 'ghcr.io' }}
+  IMAGE_REPOSITORY: ${{ vars.REGISTRY_REPOSITORY || github.repository }}/website
+
+jobs:
+  build:
+    # only build and push if this is not a pull request
+    if: ${{ github.event_name != 'pull_request' }}
+    name: Create new Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install GitVersion
+        uses: gittools/actions/gitversion/setup@v0.9.15
+        with:
+          versionSpec: '5.12.0'
+
+      - name: Determine Version
+        id: version
+        uses: gittools/actions/gitversion/execute@v0
+        with:
+          useConfigFile: true
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Config
+        run: |
+          npm config set commit-hooks false
+          npm config set git-tag-version false
+
+      - name: Version
+        run: npm version ${{ steps.version.outputs.fullSemVer }}
+
+      - name: Install
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+        env:
+          REACT_APP_VERSION: ${{ steps.version.outputs.fullSemVer }}
+
+      - name: Docker Login
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.IMAGE_REGISTRY }}
+          username: ${{ vars.REGISTRY_USERNAME || github.actor }}
+          password: ${{ secrets.REGISTRY_PASSWORD || secrets.GITHUB_TOKEN }}
+
+      - name: Data
+        id: date
+        run: BUILD_DATE="`date -u +"%Y-%m-%dT%H:%M:%SZ"`" && echo "date=$BUILD_DATE" >> $GITHUB_OUTPUT
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        env:
+          BUILD_DATE: ${{ steps.date.outputs.date }}
+          IMAGE_VERSION: ${{ steps.version.outputs.fullSemVer }}
+        with:
+          # only build and push if this is not a pull request
+          push: ${{ github.event_name != 'pull_request' }}
+          file: ./Dockerfile
+          context: ./
+          build-args: |
+            BUILD_DATE=${{ env.BUILD_DATE }}
+            IMAGE_VERSION=${{ env.IMAGE_VERSION }}
+          tags: |
+            ${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_REPOSITORY }}:latest
+            ${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_REPOSITORY }}:${{ env.IMAGE_VERSION }}

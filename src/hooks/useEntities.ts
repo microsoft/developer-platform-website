@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 import { useIsAuthenticated } from '@azure/msal-react';
+import { Template } from '@developer-platform/entities';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { getEntities } from '../API';
 
@@ -25,6 +26,10 @@ export const useEntities = (kind: string) => {
 
             if (providerAuth.length > 0) {
                 queryClient.setQueryData(['providers', 'auth'], providerAuth);
+            }
+
+            if (kind === 'template') {
+                return entities as Template[];
             }
 
             return entities;

@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+import { Template, TemplateRequest } from '@developer-platform/entities';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import { Box, CircularProgress, Stack, SvgIcon, Typography, useTheme } from '@mui/material';
 import { IChangeEvent } from '@rjsf/core';
@@ -11,7 +12,6 @@ import React, { FormEvent, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { useEntities, useTemplateCreate } from '../hooks';
 import { ReactComponent as AzureLogo } from '../img/azure.svg';
-import { Entity, TemplateRequest } from '../model';
 
 export interface ICreateFormProps {}
 
@@ -23,7 +23,7 @@ export const CreateForm: React.FC<ICreateFormProps> = (props) => {
 
     const create = useTemplateCreate();
 
-    const [template, setTemplate] = useState<Entity>();
+    const [template, setTemplate] = useState<Template>();
 
     const [formEnabled, setFormEnabled] = useState<boolean>(true);
 

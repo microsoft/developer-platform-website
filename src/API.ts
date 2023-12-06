@@ -1,8 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+import { Entity, ProviderAuth, ProviderLogin, TemplateRequest } from '@developer-platform/entities';
 import { Auth } from './Auth';
-import { Entity, ProviderAuth, ProviderLogin, TemplateRequest, getProviderAuths } from './model';
+import { getProviderAuths } from './model';
 
 const _getApiUrl = () => {
     // allow for injected value (i.e. string replacement)

@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+import { Entity } from '@developer-platform/entities';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import ManageSearchIcon from '@mui/icons-material/ManageSearch';
@@ -8,7 +9,6 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { Card, CardActions, CardContent, CardHeader, Chip, Divider, IconButton, Menu, MenuItem, Stack, SvgIcon, Typography, useTheme } from '@mui/material';
 import React from 'react';
 import { ReactComponent as AzureLogo } from '../img/azure.svg';
-import { Entity } from '../model';
 
 
 const getProviderIcon = (provider?: string) => {
@@ -75,7 +75,7 @@ export const EntityCard: React.FC<IEntityCardProps> = (props) => {
                                         {label.split('/').at(-1)}:
                                     </Typography>
                                     <Typography key={index} variant='caption'>
-                                        {entity.metadata.labels[label]}
+                                        {entity.metadata.labels![label]}
                                     </Typography>
                                 </Stack>
                             ))}

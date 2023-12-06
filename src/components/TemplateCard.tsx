@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+import { Template } from '@developer-platform/entities';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import ManageSearchIcon from '@mui/icons-material/ManageSearch';
@@ -11,7 +12,6 @@ import { useTheme } from '@mui/material/styles';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ReactComponent as AzureLogo } from '../img/azure.svg';
-import { Entity } from '../model';
 
 
 const getProviderIcon = (provider?: string) => {
@@ -23,7 +23,7 @@ const getProviderIcon = (provider?: string) => {
 };
 
 export interface ITemplateCardProps {
-    template: Entity;
+    template: Template;
 }
 
 export const TemplateCard: React.FC<ITemplateCardProps> = (props) => {

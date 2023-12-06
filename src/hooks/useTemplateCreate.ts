@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+import { TemplateRequest } from '@developer-platform/entities';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router';
 import { create } from '../API';
 import { sleep } from '../Utils';
-import { TemplateRequest } from '../model/TemplateRequest';
 
 export const useTemplateCreate = () => {
     // const isAuthenticated = useIsAuthenticated();

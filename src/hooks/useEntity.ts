@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 import { useIsAuthenticated } from '@azure/msal-react';
+import { Template } from '@developer-platform/entities';
 import { useQuery } from '@tanstack/react-query';
 import { getEntity } from '../API';
 
@@ -19,7 +20,7 @@ export const useEntity = (kind: string, name: string, namespace?: string) => {
 
             entity.ref = `${entity.kind}:${entity.metadata!.namespace}/${entity.metadata!.name}`.toLowerCase();
 
-            return entity;
+            return kind === 'template' ? (entity as Template) : entity;
         },
         {
             refetchOnMount: false,
