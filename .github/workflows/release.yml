@@ -84,3 +84,17 @@ jobs:
           tags: |
             ${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_REPOSITORY }}:latest
             ${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_REPOSITORY }}:${{ env.IMAGE_VERSION }}
+
+      - name: Create Release
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const releaseResult = await github.rest.repos.createRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              tag_name: 'v${{ steps.version.outputs.fullSemVer }}',
+              name: 'v${{ steps.version.outputs.fullSemVer }}',
+              prerelease: false,
+            });
+
+            const release = releaseResult.data;
