@@ -94,6 +94,7 @@ jobs:
               repo: context.repo.repo,
               tag_name: 'v${{ steps.version.outputs.fullSemVer }}',
               name: 'v${{ steps.version.outputs.fullSemVer }}',
+              generate_release_notes: true,
               prerelease: false,
             });
 
