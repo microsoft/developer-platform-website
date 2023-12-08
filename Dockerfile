@@ -21,7 +21,6 @@ RUN mkdir -p /home/LogFiles /opt/startup /home/site/wwwroot \
 ARG IMAGE_VERSION=unknown
 
 ENV REACT_APP_VERSION=$IMAGE_VERSION
-ENV DEVELOPER_GRAPH_IMAGE_VERSION=$IMAGE_VERSION
 
 LABEL maintainer="Microsoft" \
     org.opencontainers.image.created=$BUILD_DATE \
