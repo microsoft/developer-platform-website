@@ -2,16 +2,19 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Start",
-            "type": "msedge",
-            "cleanUp": "onlyTab",
+            "name": "Website",
             "request": "launch",
-            "url": "http://localhost:3000",
-            "webRoot": "${workspaceFolder}/src",
-            "sourceMapPathOverrides": {
-                "webpack:///src/*": "${webRoot}/*"
-            },
-            "preLaunchTask": "npm start",
+            "runtimeArgs": [
+                "run-script",
+                "start"
+            ],
+            "runtimeExecutable": "npm",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node",
+            "internalConsoleOptions": "openOnSessionStart",
+            // "sourceMaps": true
         }
     ]
 }
