@@ -1,8 +1,8 @@
-# Microsoft Developer Platform Sample Website
+# Developer Platform Sample Website
 
 [![developer-platform-website](https://img.shields.io/github/v/release/microsoft/developer-platform-website?logo=github)](https://github.com/microsoft/developer-platform-website/releases)
 
-This repo contains a sample react website that demonstrates how to integrate [Microsoft Developer Platform API][developer-platform] into your company's internal developer portal.
+This repo contains a sample react website that demonstrates how to integrate [Developer Platform API][developer-platform] into your company's internal developer portal.
 
 `// TODO`
 
