@@ -72,7 +72,7 @@ export const RootView: React.FC<IRootViewProps> = (props) => {
                             <Route path='/new' element={<MainView main><TemplatesView {...{}} /></MainView>} />
                             <Route path='/settings' element={<MainView main><SettingsView {...{}} /></MainView>} />
                             <Route path='/:kind' element={<MainView main><EntitiesView {...{}} /></MainView>} />
-                            <Route path='/new/:namespace/:name' element={<MainView main><CreateForm {...{}} /></MainView>} />
+                            <Route path='/new/:provider/:namespace/:name' element={<MainView main><CreateForm {...{}} /></MainView>} />
                         </Routes>
                     </Box>
                 </AuthenticatedTemplate>

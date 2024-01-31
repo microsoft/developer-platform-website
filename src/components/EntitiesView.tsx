@@ -23,7 +23,7 @@ export const EntitiesView: React.FC<IEntitiesViewProps> = (props) => {
     return (
         <Grid container spacing={4} >
             {entities?.map(entity => (
-                <Grid item xs={12} sm={12} md={6} lg={4} xl={3} key={entity.ref}>
+                <Grid item xs={12} sm={12} md={6} lg={4} xl={3} key={`${entity.ref.kind}:${entity.ref.provider}/${entity.ref.namespace}/${entity.ref.name}`}>
                     <EntityCard entity={entity} />
                 </Grid>
             ))}

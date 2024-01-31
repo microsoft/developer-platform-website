@@ -1,11 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { TemplateRequest } from '@developer-platform/entities';
+import { Entity } from '@developer-platform/entities';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router';
 import { create } from '../API';
 import { sleep } from '../Utils';
+import { CreatePayload } from '../model';
 
 export const useTemplateCreate = () => {
     // const isAuthenticated = useIsAuthenticated();
@@ -15,19 +16,19 @@ export const useTemplateCreate = () => {
     const queryClient = useQueryClient();
 
     return useMutation(
-        async (templateRequest: TemplateRequest) => {
-            await create(templateRequest);
-            return;
+        async (payload: CreatePayload) => {
+            const operation = await create(payload.ref, payload.input);
+            return operation;
         },
         {
-            onSuccess: async (data: void, variables: TemplateRequest, context: unknown) => {
-                const sleepSeconds = variables.provider.startsWith('devcenter') ? 10 : 3;
+            onSuccess: async (data: Entity, variables: CreatePayload, context: unknown) => {
+                const sleepSeconds = 3;
                 navigate(`/new`);
                 console.log(`Invalidating entities after ${sleepSeconds} seconds...`);
                 await sleep(sleepSeconds * 1000);
                 console.log(`Invalidating entities`);
                 queryClient.invalidateQueries(['entities'], { type: 'all' });
-            },
+            }
         }
     ).mutateAsync;
 };

@@ -28,7 +28,7 @@ Date.prototype.toTimeDisplayString = function (showTimezone: boolean = true) {
     return this.toLocaleTimeString([], {
         hour: 'numeric',
         minute: '2-digit',
-        timeZoneName: showTimezone ? 'short' : undefined,
+        timeZoneName: showTimezone ? 'short' : undefined
     });
 };
 
@@ -36,6 +36,6 @@ Date.prototype.toDateTimeDisplayString = function (showTimezone: boolean = true)
     return `${this.toLocaleDateString()} @ ${this.toLocaleTimeString([], {
         hour: 'numeric',
         minute: '2-digit',
-        timeZoneName: showTimezone ? 'short' : undefined,
+        timeZoneName: showTimezone ? 'short' : undefined
     })}`;
 };

@@ -101,7 +101,7 @@ export const TemplateCard: React.FC<ITemplateCardProps> = (props) => {
                     color='inherit'
                     variant='outlined'
                     startIcon={<RocketLaunch />}
-                    onClick={() => navigate(`/new/${template.metadata!.namespace}/${template.metadata!.name}`)}>
+                    onClick={() => navigate(`/new/${template.ref.provider}/${template.ref.namespace}/${template.ref.name}`)}>
                         Create...
                 </Button>
                 <Menu
