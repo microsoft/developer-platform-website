@@ -4,6 +4,7 @@
 import Account from '@mui/icons-material/AccountTree';
 import AddCircle from '@mui/icons-material/AddCircleOutline';
 import Cable from '@mui/icons-material/Cable';
+import Checklist from '@mui/icons-material/Checklist';
 import Cloud from '@mui/icons-material/Cloud';
 import Code from '@mui/icons-material/Code';
 import Computer from '@mui/icons-material/Computer';
@@ -34,7 +35,7 @@ const sections = [
     ],
     [
         { label: 'Providers', icon: <Cable />, href: '/provider' },
-        { label: 'Operations', icon: <Cable />, href: '/operation' }
+        { label: 'Operations', icon: <Checklist />, href: '/operation' }
     ],
     [
         { label: 'Projects', icon: <Account />, href: '/project' },
