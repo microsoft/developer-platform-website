@@ -33,7 +33,8 @@ const sections = [
         { label: 'Dashboard', icon: <Dashboard />, href: '/' }
     ],
     [
-        { label: 'Services', icon: <Cable />, href: '/services' }
+        { label: 'Providers', icon: <Cable />, href: '/provider' },
+        { label: 'Operations', icon: <Cable />, href: '/operation' }
     ],
     [
         { label: 'Projects', icon: <Account />, href: '/project' },
