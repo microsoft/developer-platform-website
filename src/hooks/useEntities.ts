@@ -11,7 +11,7 @@ export const useEntities = (kind: string) => {
     const queryClient = useQueryClient();
 
     return useQuery(
-        ['entities', kind],
+        ['entities', kind.toLowerCase()],
         async () => {
             console.log(`Fetching ${kind} entities`);
 
@@ -20,15 +20,11 @@ export const useEntities = (kind: string) => {
             console.log(`Found ${entities.length} ${kind} entities`);
             console.log(`Found ${providerAuth.length} provider auths`);
 
-            for (const entity of entities) {
-                entity.ref = `${entity.kind}:${entity.metadata!.namespace}/${entity.metadata!.name}`.toLowerCase();
-            }
-
             if (providerAuth.length > 0) {
                 queryClient.setQueryData(['providers', 'auth'], providerAuth);
             }
 
-            if (kind === 'template') {
+            if (kind.toLowerCase() === 'template') {
                 return entities as Template[];
             }
 
@@ -38,7 +34,7 @@ export const useEntities = (kind: string) => {
             refetchOnMount: false,
             refetchOnWindowFocus: false,
             staleTime: 1000 * 60 * 2, // 2 minutes
-            enabled: isAuthenticated,
+            enabled: isAuthenticated
         }
     );
 };

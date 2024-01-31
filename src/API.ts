@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Entity, ProviderAuth, ProviderLogin, TemplateRequest } from '@developer-platform/entities';
+import { Entity, EntityRef, ProviderAuth, ProviderLogin } from '@developer-platform/entities';
 import { Auth } from './Auth';
 import { getProviderAuths } from './model';
 
@@ -30,8 +30,8 @@ export const callApi = async (path: string): Promise<Response> => {
         const response = await fetch(url, {
             method: 'GET',
             headers: {
-                Authorization: token,
-            },
+                Authorization: token
+            }
         });
 
         if (!response.ok) {
@@ -45,10 +45,16 @@ export const callApi = async (path: string): Promise<Response> => {
     }
 };
 
-export const getEntity = async (kind: string, name: string, namespace?: string): Promise<Entity> => {
-    const response = await callApi(`entities/${kind}/${namespace ?? 'default'}/${name}`);
+export const getEntity = async (ref: EntityRef): Promise<Entity> => {
+    const response = await callApi(`entities/${ref.kind}/${ref.provider}/${ref.namespace ?? 'default'}/${ref.name}`);
 
     const entity = (await response.json()) as Entity;
+    entity.ref = {
+        kind: entity.kind.toLowerCase(),
+        provider: entity.metadata.provider.toLowerCase(),
+        namespace: entity.metadata.namespace?.toLowerCase() ?? 'default',
+        name: entity.metadata.name.toLowerCase()
+    };
 
     return entity;
 };
@@ -58,13 +64,22 @@ export const getEntities = async (kind: string): Promise<{ entities: Entity[]; p
 
     const entities = (await response.json()) as Entity[];
 
+    for (const entity of entities) {
+        entity.ref = {
+            kind: entity.kind.toLowerCase(),
+            provider: entity.metadata.provider.toLowerCase(),
+            namespace: entity.metadata.namespace?.toLowerCase() ?? 'default',
+            name: entity.metadata.name.toLowerCase()
+        };
+    }
+
     const providerAuth = getProviderAuths(response.headers);
 
     return { entities, providerAuth };
 };
 
-export const create = async (templateRequest: TemplateRequest): Promise<void> => {
-    const url = `${apiUrl}/entities`;
+export const create = async (ref: EntityRef, input: any): Promise<Entity> => {
+    const url = `${apiUrl}/entities/template/${ref.provider}/${ref.namespace ?? 'default'}/${ref.name}`;
 
     try {
         const token = await auth.getTokenHeader('{$host}/.default');
@@ -76,14 +91,24 @@ export const create = async (templateRequest: TemplateRequest): Promise<void> =>
             headers: {
                 Authorization: token,
                 Accept: 'application/json',
-                'Content-Type': 'application/json',
+                'Content-Type': 'application/json'
             },
-            body: JSON.stringify(templateRequest),
+            body: JSON.stringify(input)
         });
 
         if (!response.ok) {
             console.error(response);
         }
+
+        const entity = (await response.json()) as Entity;
+        entity.ref = {
+            kind: entity.kind.toLowerCase(),
+            provider: entity.metadata.provider.toLowerCase(),
+            namespace: entity.metadata.namespace?.toLowerCase() ?? 'default',
+            name: entity.metadata.name.toLowerCase()
+        };
+
+        return entity;
     } catch (error) {
         console.error(error);
         throw error;
@@ -103,8 +128,8 @@ export const getProviderLogin = async (providerAuth: ProviderAuth, redirectUri: 
         const response = await fetch(url, {
             method: 'GET',
             headers: {
-                Authorization: token,
-            },
+                Authorization: token
+            }
         });
 
         if (!response.ok) {

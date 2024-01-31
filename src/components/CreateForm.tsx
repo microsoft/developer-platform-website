@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Template, TemplateRequest } from '@developer-platform/entities';
+import { Template } from '@developer-platform/entities';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import { Box, CircularProgress, Stack, SvgIcon, Typography, useTheme } from '@mui/material';
 import { IChangeEvent } from '@rjsf/core';
@@ -12,12 +12,13 @@ import React, { FormEvent, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { useEntities, useTemplateCreate } from '../hooks';
 import { ReactComponent as AzureLogo } from '../img/azure.svg';
+import { CreatePayload } from '../model';
 
 export interface ICreateFormProps {}
 
 export const CreateForm: React.FC<ICreateFormProps> = (props) => {
 
-    const { namespace, name } = useParams();
+    const { provider, namespace, name } = useParams();
 
     const { data: templates, isLoading } = useEntities('template');
 
@@ -28,12 +29,16 @@ export const CreateForm: React.FC<ICreateFormProps> = (props) => {
     const [formEnabled, setFormEnabled] = useState<boolean>(true);
 
     useEffect(() => {
-        if (!isLoading && templates && namespace && name) {
-            const template = templates.find(t => t.metadata!.namespace === namespace && t.metadata!.name === name);
+        if (!isLoading && templates && provider && namespace && name) {
+            const template = templates.find(t =>
+                t.ref.provider === provider.toLowerCase()
+                && t.ref.namespace === namespace.toLowerCase()
+                && t.ref.name === name.toLowerCase());
+
             if (template)
                 setTemplate(template);
         }
-    }, [isLoading, templates, namespace, name]);
+    }, [isLoading, templates, provider, namespace, name]);
 
     const onSubmit = async (
         data: IChangeEvent<any, RJSFSchema, any>,
@@ -44,22 +49,17 @@ export const CreateForm: React.FC<ICreateFormProps> = (props) => {
         if (template) {
             setFormEnabled(false);
 
-            const templateRequest: TemplateRequest = {
-                templateRef: template.ref!,
-                // templateRef: {
-                //     kind: template.kind!,
-                //     namespace: template.metadata!.namespace!,
-                //     name: template.metadata!.name!,
-                // },
-                provider: template.metadata!.provider!,
-                inputJson: JSON.stringify(data.formData),
+            const payload: CreatePayload = {
+                ref: template.ref,
+                input: data.formData,
             };
 
-            console.log('TemplateRequest:', templateRequest);
+            console.log('CreatePayload:', payload);
 
             console.log('Submitting form...');
 
-            await create(templateRequest);
+            // const operation = await create(payload);
+            await create(payload);
 
             console.log('Done.');
         }

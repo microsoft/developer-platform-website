@@ -2,31 +2,39 @@
 // Licensed under the MIT License.
 
 import { useIsAuthenticated } from '@azure/msal-react';
-import { Template } from '@developer-platform/entities';
+import { EntityRef, Template } from '@developer-platform/entities';
 import { useQuery } from '@tanstack/react-query';
 import { getEntity } from '../API';
 
-export const useEntity = (kind: string, name: string, namespace?: string) => {
+export const useEntity = (ref: EntityRef) => {
     const isAuthenticated = useIsAuthenticated();
 
     return useQuery(
-        ['entities', kind, namespace ?? 'default', name],
+        [
+            'entities',
+            ref.kind.toLowerCase(),
+            ref.provider.toLowerCase(),
+            ref.namespace?.toLowerCase() ?? 'default',
+            ref.name.toLowerCase()
+        ],
         async () => {
-            console.log(`Fetching ${kind} entity ${kind}:${namespace ?? 'default'}/${name}`);
+            console.log(
+                `Fetching ${ref.kind} entity ${ref.kind}:${ref.provider}/${ref.namespace ?? 'default'}/${ref.name}`
+            );
 
-            const entity = await getEntity(kind, name, namespace);
+            const entity = await getEntity(ref);
 
-            console.log(`Found ${kind} entity ${kind}:${namespace ?? 'default'}/${name}`);
+            console.log(
+                `Found ${entity.kind} entity ${entity.ref.kind}:${entity.ref.provider}/${entity.ref.namespace}/${entity.ref.name}`
+            );
 
-            entity.ref = `${entity.kind}:${entity.metadata!.namespace}/${entity.metadata!.name}`.toLowerCase();
-
-            return kind === 'template' ? (entity as Template) : entity;
+            return entity.kind.toLowerCase() === 'template' ? (entity as Template) : entity;
         },
         {
             refetchOnMount: false,
             refetchOnWindowFocus: false,
             staleTime: 1000 * 60 * 2, // 2 minutes
-            enabled: isAuthenticated,
+            enabled: isAuthenticated
         }
     );
 };
