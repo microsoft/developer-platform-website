@@ -43,7 +43,7 @@ const sections = [
     ],
     [
         { label: 'Dev boxes', icon: <Computer />, href: '/devbox' },
-        { label: 'Source code', icon: <Code />, href: '/repo' },
+        { label: 'Source code', icon: <Code />, href: '/repository' },
         { label: 'Environments', icon: <Cloud />, href: '/environment' }
     ],
     [

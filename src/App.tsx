@@ -12,7 +12,7 @@ import { RootView } from './components/RootView';
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      retry: 2,
+      retry: 0,
       refetchOnMount: false,
       refetchOnWindowFocus: false,
       staleTime: 1000 * 60 * 1 // 1 minute
