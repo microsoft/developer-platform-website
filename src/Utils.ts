@@ -34,3 +34,4 @@ export const undefinedOrWrongParent = (list: [{ id: string }], parent: { id: str
 
 export const prettyPrintCamlCaseString = (value: string) =>
   value.charAt(0).toUpperCase() + value.slice(1).replace(/\B[A-Z]/g, ' $&');
+
