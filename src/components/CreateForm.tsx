@@ -10,13 +10,13 @@ import { RJSFSchema } from '@rjsf/utils';
 import validator from '@rjsf/validator-ajv8';
 import React, { FormEvent, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
+import AzureLogo from '../assets/azure.svg?react';
 import { useEntities, useTemplateCreate } from '../hooks';
-import { ReactComponent as AzureLogo } from '../img/azure.svg';
 import { CreatePayload } from '../model';
 
 export interface ICreateFormProps {}
 
-export const CreateForm: React.FC<ICreateFormProps> = (props) => {
+export const CreateForm: React.FC<ICreateFormProps> = () => {
 
     const { provider, namespace, name } = useParams();
 
@@ -41,8 +41,10 @@ export const CreateForm: React.FC<ICreateFormProps> = (props) => {
     }, [isLoading, templates, provider, namespace, name]);
 
     const onSubmit = async (
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         data: IChangeEvent<any, RJSFSchema, any>,
-        event: FormEvent<any>
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
+        _event: FormEvent<any>
     ) => {
         console.log('Data submitted: ', data.formData);
 

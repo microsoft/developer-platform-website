@@ -19,7 +19,7 @@ export interface IRootViewProps { }
 
 export const ColorModeContext = React.createContext({ toggleColorMode: () => { } });
 
-export const RootView: React.FC<IRootViewProps> = (props) => {
+export const RootView: React.FC<IRootViewProps> = () => {
 
     const authResult: MsalAuthenticationResult = useMsalAuthentication(InteractionType.Redirect, { scopes: ['openid'], redirectUri: window.location.href });
 

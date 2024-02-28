@@ -58,7 +58,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export interface IMainAppBarProps { }
 
-export const MainAppBar: React.FC<IMainAppBarProps> = (props) => {
+export const MainAppBar: React.FC<IMainAppBarProps> = () => {
 
     const { pathname } = useLocation();
 

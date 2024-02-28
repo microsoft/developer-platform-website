@@ -20,9 +20,9 @@ import { useTheme } from '@mui/material/styles';
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getProviderLogin } from '../API';
+import ContosoLogo from '../assets/contoso_logo.svg?react';
+import ContosoLogoDark from '../assets/contoso_logo_dark.svg?react';
 import { useProviderAuth } from '../hooks';
-import { ReactComponent as ContosoLogo } from '../img/contoso_logo.svg';
-import { ReactComponent as ContosoLogoDark } from '../img/contoso_logo_dark.svg';
 
 const drawerWidth = 240;
 
@@ -55,7 +55,7 @@ const sections = [
 export interface IMainDrawerProps { }
 
 
-export const MainDrawer: React.FC<IMainDrawerProps> = (props) => {
+export const MainDrawer: React.FC<IMainDrawerProps> = () => {
 
     const theme = useTheme();
 

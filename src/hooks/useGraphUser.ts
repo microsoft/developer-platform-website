@@ -6,12 +6,12 @@ import { useQuery } from '@tanstack/react-query';
 import { getMe } from '../MSGraph';
 
 export const useGraphUser = () => {
-    const isAuthenticated = useIsAuthenticated();
+  const isAuthenticated = useIsAuthenticated();
 
-    return useQuery(['graphUser', 'me'], async () => await getMe(), {
-        refetchOnMount: false,
-        refetchOnWindowFocus: false,
-        staleTime: 1000 * 60 * 5, // 5 minutes
-        enabled: isAuthenticated,
-    });
+  return useQuery(['graphUser', 'me'], async () => await getMe(), {
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    staleTime: 1000 * 60 * 5, // 5 minutes
+    enabled: isAuthenticated,
+  });
 };

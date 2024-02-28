@@ -4,6 +4,6 @@
 import { GraphPrincipal } from './GraphPrincipal';
 
 export interface GraphGroup extends GraphPrincipal {
-    type: 'Group';
-    mail?: string;
+  type: 'Group';
+  mail?: string;
 }

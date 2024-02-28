@@ -4,7 +4,7 @@
 import { GraphPrincipal } from './GraphPrincipal';
 
 export interface GraphServicePrincipal extends GraphPrincipal {
-    type: 'ServicePrincipal';
-    appId?: string;
-    appDisplayName: string;
+  type: 'ServicePrincipal';
+  appId?: string;
+  appDisplayName: string;
 }
