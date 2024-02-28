@@ -59,7 +59,7 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          REACT_APP_VERSION: ${{ steps.version.outputs.fullSemVer }}
+          VITE_VERSION: ${{ steps.version.outputs.fullSemVer }}
 
       - name: Docker Login
         uses: docker/login-action@v3

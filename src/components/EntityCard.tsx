@@ -8,7 +8,7 @@ import ManageSearchIcon from '@mui/icons-material/ManageSearch';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { Card, CardActions, CardContent, CardHeader, Chip, Divider, IconButton, Menu, MenuItem, Stack, SvgIcon, Typography, useTheme } from '@mui/material';
 import React from 'react';
-import { ReactComponent as AzureLogo } from '../img/azure.svg';
+import AzureLogo from '../assets/azure.svg?react';
 
 
 const getProviderIcon = (provider?: string) => {
@@ -70,11 +70,11 @@ export const EntityCard: React.FC<IEntityCardProps> = (props) => {
                             {/* Labels */}
                         </Typography>
                             {Object.keys(entity.metadata.labels).map((label, index) => label.endsWith('resource-group-id') ? <></> : (
-                                <Stack direction='row' spacing={1} alignItems='baseline' justifyContent='flex-start'>
-                                    <Typography key={index} variant='subtitle2' color={theme.palette.text.primary}>
-                                        {label.split('/').at(-1)}:
+                                <Stack direction='row' spacing={1} alignItems='baseline' justifyContent='flex-start' key={entity.ref.name + label + index}>
+                                    <Typography variant='subtitle2' color={theme.palette.text.primary}>
+                                        {label.split('/')[label.split('/').length - 1]}:
                                     </Typography>
-                                    <Typography key={index} variant='caption'>
+                                    <Typography variant='caption'>
                                         {entity.metadata.labels![label]}
                                     </Typography>
                                 </Stack>
@@ -89,7 +89,7 @@ export const EntityCard: React.FC<IEntityCardProps> = (props) => {
                         </Typography>
                         <Stack direction='row' spacing={1}>
                             {entity.metadata.tags.map((tag, index) => (
-                                <Chip key={index} label={tag} size='small' color='secondary' variant="outlined" />
+                                <Chip key={entity.ref.name + tag + index} label={tag} size='small' color='secondary' variant="outlined" />
                             ))}
                         </Stack>
                     </Stack>

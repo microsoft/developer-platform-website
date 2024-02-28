@@ -131,6 +131,7 @@ dist
 
 
 .DS_Store
+**/.DS_Store
 
 .local
 docs/.local

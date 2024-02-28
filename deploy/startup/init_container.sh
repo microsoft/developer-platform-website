@@ -3,18 +3,18 @@
 # Get environment variables to show up in SSH session
 eval $(printenv | sed -n "s/^\([^=]\+\)=\(.*\)$/export \1=\2/p" | sed 's/"/\\\"/g' | sed '/=/s//="/' | sed 's/$/"/' >> /etc/profile)
 
-pushd /home/site/wwwroot/static/js > /dev/null
+pushd /home/site/wwwroot/assets > /dev/null
 
-    pattern="main.*.js"
+    pattern="index-*.js"
 
     files=( $(compgen -W "$pattern") )
-    mainFile=$files
+    indexJs=$files
 
-    sed -i 's|__REACT_APP_API_URL__|'"$REACT_APP_API_URL"'|g' "$mainFile"
-    sed -i 's|__REACT_APP_MSAL_CLIENT_ID__|'"$REACT_APP_MSAL_CLIENT_ID"'|g' "$mainFile"
-    sed -i 's|__REACT_APP_MSAL_TENANT_ID__|'"$REACT_APP_MSAL_TENANT_ID"'|g' "$mainFile"
-    sed -i 's|__REACT_APP_MSAL_SCOPE__|'"$REACT_APP_MSAL_SCOPE"'|g' "$mainFile"
-    sed -i 's|__REACT_APP_VERSION__|'"$REACT_APP_VERSION"'|g' "$mainFile"
+    sed -i 's|__VITE_API_URL__|'"$VITE_API_URL"'|g' "$indexJs"
+    sed -i 's|__VITE_MSAL_CLIENT_ID__|'"$VITE_MSAL_CLIENT_ID"'|g' "$indexJs"
+    sed -i 's|__VITE_MSAL_TENANT_ID__|'"$VITE_MSAL_TENANT_ID"'|g' "$indexJs"
+    sed -i 's|__VITE_MSAL_SCOPE__|'"$VITE_MSAL_SCOPE"'|g' "$indexJs"
+    sed -i 's|__VITE_VERSION__|'"$VITE_VERSION"'|g' "$indexJs"
 
 popd > /dev/null
 

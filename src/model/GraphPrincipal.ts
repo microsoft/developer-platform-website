@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 export interface GraphPrincipal {
-    id: string;
-    type: string;
-    displayName?: string;
+  id: string;
+  type: string;
+  displayName?: string;
 }

@@ -10,7 +10,7 @@ import { EntityCard } from './EntityCard';
 
 export interface IEntitiesViewProps { }
 
-export const EntitiesView: React.FC<IEntitiesViewProps> = (props) => {
+export const EntitiesView: React.FC<IEntitiesViewProps> = () => {
 
     const { kind } = useParams();
 

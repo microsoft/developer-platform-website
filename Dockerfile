@@ -20,7 +20,7 @@ RUN mkdir -p /home/LogFiles /opt/startup /home/site/wwwroot \
 
 ARG IMAGE_VERSION=unknown
 
-ENV REACT_APP_VERSION=$IMAGE_VERSION
+ENV VITE_VERSION=$IMAGE_VERSION
 
 LABEL maintainer="Microsoft" \
     org.opencontainers.image.created=$BUILD_DATE \
@@ -36,7 +36,7 @@ LABEL maintainer="Microsoft" \
 # setup default site
 RUN rm -f /etc/ssh/sshd_config
 COPY deploy/startup /opt/startup
-COPY build /home/site/wwwroot
+COPY dist /home/site/wwwroot
 
 # setup SSH
 COPY deploy/sshd_config /etc/ssh/

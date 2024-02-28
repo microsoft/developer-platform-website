@@ -6,7 +6,7 @@ import React from 'react';
 
 export interface ISettingsViewProps { }
 
-export const SettingsView: React.FC<ISettingsViewProps> = (props) => {
+export const SettingsView: React.FC<ISettingsViewProps> = () => {
 
     return (
         <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>

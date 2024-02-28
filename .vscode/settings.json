@@ -6,6 +6,7 @@
         "msal",
         "rjsf",
         "signout",
+        "svgr",
         "tanstack"
     ]
 }

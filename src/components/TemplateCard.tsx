@@ -11,7 +11,7 @@ import { Button, Card, CardActions, CardContent, CardHeader, Chip, Divider, Icon
 import { useTheme } from '@mui/material/styles';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ReactComponent as AzureLogo } from '../img/azure.svg';
+import AzureLogo from '../assets/azure.svg?react';
 
 
 const getProviderIcon = (provider?: string) => {

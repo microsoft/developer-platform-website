@@ -5,8 +5,8 @@ import ClearIcon from '@mui/icons-material/Clear';
 import SearchIcon from '@mui/icons-material/Search';
 import { Box, Grid, IconButton, InputBase, Paper, SvgIcon, SvgIconProps, useTheme } from '@mui/material';
 import React from 'react';
-import { ReactComponent as ContosoLogo } from '../img/contoso_logo.svg';
-import { ReactComponent as ContosoLogoDark } from '../img/contoso_logo_dark.svg';
+import ContosoLogo from '../assets/contoso_logo.svg?react';
+import ContosoLogoDark from '../assets/contoso_logo_dark.svg?react';
 
 export const Contoso = (props: SvgIconProps) => (
     <SvgIcon {...props}>
@@ -32,7 +32,7 @@ export const Contoso = (props: SvgIconProps) => (
 
 export interface IDashboardViewProps { }
 
-export const DashboardView: React.FC<IDashboardViewProps> = (props) => {
+export const DashboardView: React.FC<IDashboardViewProps> = () => {
 
     const theme = useTheme();
 

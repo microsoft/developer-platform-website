@@ -10,7 +10,7 @@ import { TemplateCard } from './TemplateCard';
 
 export interface ITemplatesViewProps { }
 
-export const TemplatesView: React.FC<ITemplatesViewProps> = (props) => {
+export const TemplatesView: React.FC<ITemplatesViewProps> = () => {
 
     const { data: templates, isLoading } = useEntities('template');
 
