@@ -42,12 +42,12 @@ export class Auth implements TokenCredential, AuthenticationProvider {
             authority: this._getAuthority(),
             redirectUri: window.location.origin,
             postLogoutRedirectUri: window.location.origin,
-            navigateToLoginRequestUrl: true,
+            navigateToLoginRequestUrl: true
         },
         cache: {
             cacheLocation: 'sessionStorage',
-            storeAuthStateInCookie: false,
-        },
+            storeAuthStateInCookie: false
+        }
         // system: { navigationClient }
     };
 
@@ -61,7 +61,7 @@ export class Auth implements TokenCredential, AuthenticationProvider {
 
         const hostScope = '{$host}/.default';
 
-        // autorest clients add sclope: '{$host}/.default'
+        // autorest clients add scope: '{$host}/.default'
         const hostIndex = scopes.indexOf(hostScope);
 
         if (hostIndex > -1) {
@@ -153,5 +153,5 @@ export class Auth implements TokenCredential, AuthenticationProvider {
         return authResult?.accessToken ?? Promise.reject('Unable to get token');
     };
 
-    // logout = async (): Promise<void> => this.clientApplication.logout();
+    logout = async (): Promise<void> => this.clientApplication.logoutRedirect();
 }

@@ -103,9 +103,9 @@ export const EntityCard: React.FC<IEntityCardProps> = (props) => {
                 {entity.spec.creates && (
                     <Stack pl={1}>
                         <Stack direction='row' spacing={1}>
-                            {entity.spec.creates?.map((plan, index) => (
+                            {/* {entity.spec.creates?.map((plan, index) => (
                                 <Chip key={index} label={plan.kind} color='primary' variant="outlined" />
-                            ))}
+                            ))} */}
                         </Stack>
                     </Stack>
                 )}

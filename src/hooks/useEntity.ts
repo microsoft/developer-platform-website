@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { useIsAuthenticated } from '@azure/msal-react';
-import { EntityRef, Template } from '@developer-platform/entities';
+import { EntityRef, Environment, Operation, Provider, Repository, Template } from '@developer-platform/entities';
 import { useQuery } from '@tanstack/react-query';
 import { getEntity } from '../API';
 
@@ -28,7 +28,27 @@ export const useEntity = (ref: EntityRef) => {
                 `Found ${entity.kind} entity ${entity.ref.kind}:${entity.ref.provider}/${entity.ref.namespace}/${entity.ref.name}`
             );
 
-            return entity.kind.toLowerCase() === 'template' ? (entity as Template) : entity;
+            if (entity.kind.toLowerCase() === 'environment') {
+                return entity as Environment;
+            }
+
+            if (entity.kind.toLowerCase() === 'operation') {
+                return entity as Operation;
+            }
+
+            if (entity.kind.toLowerCase() === 'provider') {
+                return entity as Provider;
+            }
+
+            if (entity.kind.toLowerCase() === 'repository') {
+                return entity as unknown as Repository;
+            }
+
+            if (entity.kind.toLowerCase() === 'template') {
+                return entity as unknown as Template;
+            }
+
+            return entity;
         },
         {
             refetchOnMount: false,

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Entity } from '@developer-platform/entities';
+import { Operation } from '@developer-platform/entities';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router';
 import { create } from '../API';
@@ -21,7 +21,7 @@ export const useTemplateCreate = () => {
             return operation;
         },
         {
-            onSuccess: async (data: Entity, variables: CreatePayload, context: unknown) => {
+            onSuccess: async (data: Operation, variables: CreatePayload, context: unknown) => {
                 const sleepSeconds = 3;
                 navigate(`/new`);
                 console.log(`Invalidating entities after ${sleepSeconds} seconds...`);

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Entity, EntityRef, ProviderAuth, ProviderLogin } from '@developer-platform/entities';
+import { Entity, EntityRef, Operation, ProviderAuth, ProviderLogin } from '@developer-platform/entities';
 import { Auth } from './Auth';
 import { getProviderAuths } from './model';
 
@@ -78,7 +78,7 @@ export const getEntities = async (kind: string): Promise<{ entities: Entity[]; p
     return { entities, providerAuth };
 };
 
-export const create = async (ref: EntityRef, input: any): Promise<Entity> => {
+export const create = async (ref: EntityRef, input: any): Promise<Operation> => {
     const url = `${apiUrl}/entities/template/${ref.provider}/${ref.namespace ?? 'default'}/${ref.name}`;
 
     try {
@@ -100,15 +100,16 @@ export const create = async (ref: EntityRef, input: any): Promise<Entity> => {
             console.error(response);
         }
 
-        const entity = (await response.json()) as Entity;
-        entity.ref = {
-            kind: entity.kind.toLowerCase(),
-            provider: entity.metadata.provider.toLowerCase(),
-            namespace: entity.metadata.namespace?.toLowerCase() ?? 'default',
-            name: entity.metadata.name.toLowerCase()
+        const operation = (await response.json()) as Operation;
+
+        operation.ref = {
+            kind: operation.kind.toLowerCase(),
+            provider: operation.metadata.provider.toLowerCase(),
+            namespace: operation.metadata.namespace?.toLowerCase() ?? 'default',
+            name: operation.metadata.name.toLowerCase()
         };
 
-        return entity;
+        return operation;
     } catch (error) {
         console.error(error);
         throw error;

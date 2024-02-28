@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { useIsAuthenticated } from '@azure/msal-react';
-import { Template } from '@developer-platform/entities';
+import { Environment, Operation, Provider, Repository, Template } from '@developer-platform/entities';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { getEntities } from '../API';
 
@@ -24,8 +24,24 @@ export const useEntities = (kind: string) => {
                 queryClient.setQueryData(['providers', 'auth'], providerAuth);
             }
 
+            if (kind.toLowerCase() === 'environment') {
+                return entities as Environment[];
+            }
+
+            if (kind.toLowerCase() === 'operation') {
+                return entities as Operation[];
+            }
+
+            if (kind.toLowerCase() === 'provider') {
+                return entities as Provider[];
+            }
+
+            if (kind.toLowerCase() === 'repository') {
+                return entities as unknown as Repository[];
+            }
+
             if (kind.toLowerCase() === 'template') {
-                return entities as Template[];
+                return entities as unknown as Template[];
             }
 
             return entities;

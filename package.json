@@ -6,7 +6,7 @@
     "@azure/core-auth": "^1.5.0",
     "@azure/msal-browser": "^3.1.0",
     "@azure/msal-react": "^2.0.3",
-    "@developer-platform/entities": "^0.3.23",
+    "@developer-platform/entities": "^0.4.29",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@microsoft/microsoft-graph-client": "^3.0.7",

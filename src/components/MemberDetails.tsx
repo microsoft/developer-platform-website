@@ -6,6 +6,7 @@ import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { Button, IconButton, Stack, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import React, { useContext } from 'react';
+import { auth } from '../API';
 import { getVersion } from '../Utils';
 import { GraphUser } from '../model';
 import { MemberAvatar } from './MemberAvatar';
@@ -41,7 +42,7 @@ export const MemberDetails: React.FC<IMemberDetailsProps> = (props) => {
                         {user.department}
                     </Typography>
                     {signout && (
-                        <Button sx={{ pl: 0, justifyContent: 'flex-start' }} size='small'>Sign out</Button>
+                        <Button sx={{ pl: 0, justifyContent: 'flex-start' }} size='small' onClick={auth.logout}>Sign out</Button>
                     )}
                 </Stack>
             </Stack>

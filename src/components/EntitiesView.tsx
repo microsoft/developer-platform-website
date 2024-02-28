@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+import { Entity } from '@developer-platform/entities';
 import { Box, CircularProgress, Grid } from '@mui/material';
 import React from 'react';
 import { useParams } from 'react-router-dom';
@@ -24,7 +25,7 @@ export const EntitiesView: React.FC<IEntitiesViewProps> = (props) => {
         <Grid container spacing={4} >
             {entities?.map(entity => (
                 <Grid item xs={12} sm={12} md={6} lg={4} xl={3} key={`${entity.ref.kind}:${entity.ref.provider}/${entity.ref.namespace}/${entity.ref.name}`}>
-                    <EntityCard entity={entity} />
+                    <EntityCard entity={entity as Entity} />
                 </Grid>
             ))}
         </Grid>

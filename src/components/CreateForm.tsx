@@ -33,7 +33,7 @@ export const CreateForm: React.FC<ICreateFormProps> = (props) => {
             const template = templates.find(t =>
                 t.ref.provider === provider.toLowerCase()
                 && t.ref.namespace === namespace.toLowerCase()
-                && t.ref.name === name.toLowerCase());
+                && t.ref.name === name.toLowerCase()) as Template;
 
             if (template)
                 setTemplate(template);

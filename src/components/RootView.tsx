@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 import { InteractionStatus, InteractionType } from '@azure/msal-browser';
-import { AuthenticatedTemplate, MsalAuthenticationResult, useMsal, useMsalAuthentication } from '@azure/msal-react';
-import { Box, CssBaseline, LinearProgress, ThemeProvider, createTheme } from '@mui/material';
+import { AuthenticatedTemplate, MsalAuthenticationResult, UnauthenticatedTemplate, useMsal, useMsalAuthentication } from '@azure/msal-react';
+import { Box, CssBaseline, LinearProgress, ThemeProvider, Typography, createTheme } from '@mui/material';
 import React, { useEffect, useMemo, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { CreateForm } from './CreateForm';
@@ -61,12 +61,12 @@ export const RootView: React.FC<IRootViewProps> = (props) => {
     return (
         <ColorModeContext.Provider value={colorMode}>
             <ThemeProvider theme={theme}>
-                <AuthenticatedTemplate>
                     <Box sx={{ display: 'flex' }}>
                         <CssBaseline />
                         <MainAppBar />
                         <LinearProgress />
                         <MainDrawer />
+                        <AuthenticatedTemplate>
                         <Routes>
                             <Route path='/' element={<MainView main><DashboardView {...{}} /></MainView>} />
                             <Route path='/new' element={<MainView main><TemplatesView {...{}} /></MainView>} />
@@ -74,8 +74,11 @@ export const RootView: React.FC<IRootViewProps> = (props) => {
                             <Route path='/:kind' element={<MainView main><EntitiesView {...{}} /></MainView>} />
                             <Route path='/new/:provider/:namespace/:name' element={<MainView main><CreateForm {...{}} /></MainView>} />
                         </Routes>
+                        </AuthenticatedTemplate>
+                        <UnauthenticatedTemplate>
+                            <Typography variant="h6" align="center">Please sign-in to continue.</Typography>
+                        </UnauthenticatedTemplate>
                     </Box>
-                </AuthenticatedTemplate>
             </ThemeProvider>
         </ColorModeContext.Provider>
     );
