@@ -4,7 +4,16 @@
 
 This repo contains a sample react website that demonstrates how to integrate [Developer Platform API][developer-platform] into your company's internal developer portal. This is a demo, it is not intended for release or production use in its current form, nor is it supported.
 
-`// TODO`
+## Getting Started
+
+While this application is not supported, it can be quite useful. To start the application, you can run the following command:
+
+```bash
+npx vite
+```
+This will start the application on `http://localhost:3000/new`. If the developer platform is running you should see a page similare to the one below:
+![Developer Platform Sample Website](./docs/img/new.png)
+
 
 ## Contributing
 
