@@ -144,7 +144,7 @@ export class Auth implements TokenCredential, AuthenticationProvider {
   };
 
   getAccessToken = async (authenticationProviderOptions?: AuthenticationProviderOptions): Promise<string> => {
-    const graphScopes = ['User.Read', 'User.ReadBasic.All', 'Directory.Read.All', 'People.Read']; // An array of graph scopes
+    const graphScopes = ['User.Read']; // An array of graph scopes
 
     if (authenticationProviderOptions?.scopes) graphScopes.concat(authenticationProviderOptions.scopes);
 
