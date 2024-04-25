@@ -9,15 +9,15 @@ import { getEntity } from '../API';
 export const useEntity = (ref: EntityRef) => {
   const isAuthenticated = useIsAuthenticated();
 
-  return useQuery(
-    [
+  return useQuery({
+    queryKey: [
       'entities',
       ref.kind.toLowerCase(),
       ref.provider.toLowerCase(),
       ref.namespace?.toLowerCase() ?? 'default',
       ref.name.toLowerCase(),
     ],
-    async () => {
+    queryFn: async () => {
       console.log(`Fetching ${ref.kind} entity ${ref.kind}:${ref.provider}/${ref.namespace ?? 'default'}/${ref.name}`);
 
       const entity = await getEntity(ref);
@@ -48,11 +48,9 @@ export const useEntity = (ref: EntityRef) => {
 
       return entity;
     },
-    {
-      refetchOnMount: false,
-      refetchOnWindowFocus: false,
-      staleTime: 1000 * 60 * 2, // 2 minutes
-      enabled: isAuthenticated,
-    }
-  );
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    staleTime: 1000 * 60 * 2, // 2 minutes
+    enabled: isAuthenticated,
+  });
 };

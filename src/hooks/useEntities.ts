@@ -10,9 +10,9 @@ export const useEntities = (kind: string) => {
   const isAuthenticated = useIsAuthenticated();
   const queryClient = useQueryClient();
 
-  return useQuery(
-    ['entities', kind.toLowerCase()],
-    async () => {
+  return useQuery({
+    queryKey: ['entities', kind.toLowerCase()],
+    queryFn: async () => {
       console.log(`Fetching ${kind} entities`);
 
       const { entities, providerAuth } = await getEntities(kind);
@@ -46,11 +46,9 @@ export const useEntities = (kind: string) => {
 
       return entities;
     },
-    {
-      refetchOnMount: false,
-      refetchOnWindowFocus: false,
-      staleTime: 1000 * 60 * 2, // 2 minutes
-      enabled: isAuthenticated,
-    }
-  );
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    staleTime: 1000 * 60 * 2, // 2 minutes
+    enabled: isAuthenticated,
+  });
 };

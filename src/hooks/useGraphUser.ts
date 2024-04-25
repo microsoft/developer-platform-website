@@ -8,7 +8,9 @@ import { getMe } from '../MSGraph';
 export const useGraphUser = () => {
   const isAuthenticated = useIsAuthenticated();
 
-  return useQuery(['graphUser', 'me'], async () => await getMe(), {
+  return useQuery({
+    queryKey: ['graphUser', 'me'],
+    queryFn: async () => await getMe(),
     refetchOnMount: false,
     refetchOnWindowFocus: false,
     staleTime: 1000 * 60 * 5, // 5 minutes

@@ -22,6 +22,13 @@ export const CreateForm: React.FC<ICreateFormProps> = () => {
 
     const { data: templates, isLoading } = useEntities('template');
 
+    // const { data: tt } = useEntity({
+    //     kind: 'template',
+    //     provider: provider ?? '',
+    //     namespace: namespace ?? '',
+    //     name: name ?? '',
+    // });
+
     const create = useTemplateCreate();
 
     const [template, setTemplate] = useState<Template>();

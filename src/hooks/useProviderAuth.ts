@@ -8,7 +8,9 @@ import { useQuery } from '@tanstack/react-query';
 export const useProviderAuth = () => {
   const isAuthenticated = useIsAuthenticated();
 
-  return useQuery(['providers', 'auth'], () => [] as ProviderAuth[], {
+  return useQuery({
+    queryKey: ['providers', 'auth'],
+    queryFn: () => [] as ProviderAuth[],
     refetchOnMount: false,
     refetchOnWindowFocus: false,
     staleTime: Infinity,

@@ -15,21 +15,19 @@ export const useTemplateCreate = () => {
 
   const queryClient = useQueryClient();
 
-  return useMutation(
-    async (payload: CreatePayload) => {
+  return useMutation({
+    mutationFn: async (payload: CreatePayload) => {
       const operation = await create(payload.ref, payload.input);
       return operation;
     },
-    {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      onSuccess: async (_data: Operation, _variables: CreatePayload, _context: unknown) => {
-        const sleepSeconds = 3;
-        navigate(`/new`);
-        console.log(`Invalidating entities after ${sleepSeconds} seconds...`);
-        await sleep(sleepSeconds * 1000);
-        console.log(`Invalidating entities`);
-        queryClient.invalidateQueries(['entities'], { type: 'all' });
-      },
-    }
-  ).mutateAsync;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    onSuccess: async (_data: Operation, _variables: CreatePayload, _context: unknown) => {
+      const sleepSeconds = 3;
+      navigate(`/new`);
+      console.log(`Invalidating entities after ${sleepSeconds} seconds...`);
+      await sleep(sleepSeconds * 1000);
+      console.log(`Invalidating entities`);
+      queryClient.invalidateQueries({ queryKey: ['entities'], type: 'all' });
+    },
+  }).mutateAsync;
 };
