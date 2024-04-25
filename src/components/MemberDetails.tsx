@@ -60,8 +60,8 @@ export const MemberDetails: React.FC<IMemberDetailsProps> = (props) => {
                             </Button>
                         </Tooltip>
                         <Tooltip title="api version" placement="bottom-start" >
-                        <Button href={`https://github.com/microsoft/developer-platform/releases/tag/v${version}`}
-                            target='_blank' rel='noopener noreferrer' size='small'
+                            <Button href={`https://github.com/microsoft/developer-platform/releases/tag/v${apiVersion}`}
+                                target='_blank' rel='noopener noreferrer' size='small'
                                 sx={{ p: 0, ml: 0, textTransform: 'none', color: 'inherit', fontWeight: 300, fontStyle: 'italic', '&:hover': { backgroundColor: 'inherit' } }}>
                                 (v{apiVersion})
                             </Button>
