@@ -3,11 +3,12 @@
 
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
-import { Button, IconButton, Stack, Typography } from '@mui/material';
+import { Button, IconButton, Stack, Tooltip, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import React, { useContext } from 'react';
 import { auth } from '../API';
 import { getVersion } from '../Utils';
+import { useApiVersion } from '../hooks';
 import { GraphUser } from '../model';
 import { MemberAvatar } from './MemberAvatar';
 import { ColorModeContext } from './RootView';
@@ -26,6 +27,7 @@ export const MemberDetails: React.FC<IMemberDetailsProps> = (props) => {
     const colorMode = useContext(ColorModeContext);
 
     const version = getVersion();
+    const { data: apiVersion } = useApiVersion();
 
     return (
         <Stack>
@@ -48,10 +50,23 @@ export const MemberDetails: React.FC<IMemberDetailsProps> = (props) => {
             </Stack>
 
             {signout && (
-                <Stack direction='row' sx={{ justifyContent: 'space-between' }}>
-                    <Button href={`https://github.com/microsoft/developer-platform-pr/releases/tag/v${version}`}
-                        target='_blank' rel='noopener noreferrer' size='small'
-                        sx={{ ml: 1, textTransform: 'none', color: 'inherit', '&:hover': { backgroundColor: 'inherit' } }}>v{version}</Button>
+                <Stack direction='row' sx={{ justifyContent: 'space-between', alignItems: 'center'}}>
+                    <Stack direction='row' sx={{ justifyContent: 'space-between', alignItems: 'center' }}>
+                        <Tooltip title="website version" placement="bottom-start" >
+                            <Button href={`https://github.com/microsoft/developer-platform-website/releases/tag/v${version}`}
+                                target='_blank' rel='noopener noreferrer' size='small'
+                                sx={{ p: 0, ml: 1, textTransform: 'none', color: 'inherit', '&:hover': { backgroundColor: 'inherit' } }}>
+                                v{version}
+                            </Button>
+                        </Tooltip>
+                        <Tooltip title="api version" placement="bottom-start" >
+                        <Button href={`https://github.com/microsoft/developer-platform/releases/tag/v${version}`}
+                            target='_blank' rel='noopener noreferrer' size='small'
+                                sx={{ p: 0, ml: 0, textTransform: 'none', color: 'inherit', fontWeight: 300, fontStyle: 'italic', '&:hover': { backgroundColor: 'inherit' } }}>
+                                (v{apiVersion})
+                            </Button>
+                        </Tooltip>
+                    </Stack>
                     <IconButton size='small' disableRipple sx={{ mr: 1, mb: 1, '&:hover': { backgroundColor: 'inherit' } }} onClick={colorMode.toggleColorMode} color='inherit'>
                         {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
                     </IconButton>

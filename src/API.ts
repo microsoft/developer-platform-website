@@ -116,6 +116,26 @@ export const create = async (ref: EntityRef, input: unknown): Promise<Operation>
   }
 };
 
+// version endpoint is not protected by auth
+export const getApiVersion = async (): Promise<string> => {
+  const url = `${apiUrl}/version`;
+
+  try {
+    const response = await fetch(url, {
+      method: 'GET',
+    });
+
+    if (!response.ok) {
+      console.error(response);
+    }
+
+    return response.text();
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
 export const getProviderLogin = async (providerAuth: ProviderAuth, redirectUri: string): Promise<ProviderLogin> => {
   const url = `${providerAuth.authorizationUri}?redirect_uri=${redirectUri}`;
 
