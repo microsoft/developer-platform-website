@@ -1,3 +1,9 @@
+# NOTE: THIS REPOSITORY IS PART OF A SET OF ONGOING INVESTIGATIONS
+
+*This repository contains part of a set of explorations around the concepts described in the platform engineering MS Learn content: https://aka.ms/plat-eng-learn. It is not intended for direct internal or external customer use.*
+
+----
+
 # Developer Platform Sample Website
 
 [![developer-platform-website](https://img.shields.io/github/v/release/microsoft/developer-platform-website?logo=github)](https://github.com/microsoft/developer-platform-website/releases)
