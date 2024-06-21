@@ -118,8 +118,7 @@ export const MainAppBar: React.FC<IMainAppBarProps> = () => {
 
 
                 <Box sx={{ flexGrow: 1 }} />
-                {pathname !== '/orgs/contoso' && (
-
+                {pathname !== '/' && (
                     <Search sx={{ flexGrow: 1, mx: 2 }}>
                         <SearchIconWrapper>
                             <SearchIcon />
