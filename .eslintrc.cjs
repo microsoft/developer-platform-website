@@ -14,7 +14,15 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
-    '@typescript-eslint/no-unused-vars': 'warn',
+    '@typescript-eslint/no-unused-vars': [
+      'warn',
+      {
+        'argsIgnorePattern': '^_',
+        'caughtErrorsIgnorePattern': '^_',
+        'destructuredArrayIgnorePattern': '^_',
+        'varsIgnorePattern': '^_',
+       }
+    ],
     '@typescript-eslint/no-explicit-any': 'warn'
   },
 }

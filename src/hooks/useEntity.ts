@@ -5,44 +5,40 @@ import { useIsAuthenticated } from '@azure/msal-react';
 import { EntityRef, Environment, Operation, Provider, Repository, Template } from '@developer-platform/entities';
 import { useQuery } from '@tanstack/react-query';
 import { getEntity } from '../API';
+import { createEntityRef } from '../model';
 
 export const useEntity = (ref: EntityRef) => {
   const isAuthenticated = useIsAuthenticated();
 
+  // normalize the ref
+  ref = createEntityRef(ref.kind, ref.provider, ref.namespace, ref.name);
+
   return useQuery({
-    queryKey: [
-      'entities',
-      ref.kind.toLowerCase(),
-      ref.provider.toLowerCase(),
-      ref.namespace?.toLowerCase() ?? 'default',
-      ref.name.toLowerCase(),
-    ],
+    queryKey: ['entities', ref.kind, ref.provider, ref.namespace, ref.name],
     queryFn: async () => {
-      console.log(`Fetching ${ref.kind} entity ${ref.kind}:${ref.provider}/${ref.namespace ?? 'default'}/${ref.name}`);
+      console.log(`Fetching ${ref.kind} entity ${ref.id}`);
 
       const entity = await getEntity(ref);
 
-      console.log(
-        `Found ${entity.kind} entity ${entity.ref.kind}:${entity.ref.provider}/${entity.ref.namespace}/${entity.ref.name}`
-      );
+      console.log(`Found ${entity.kind} entity ${entity.ref.id}`);
 
-      if (entity.kind.toLowerCase() === 'environment') {
+      if (entity.ref.kind.toLowerCase() === 'environment') {
         return entity as Environment;
       }
 
-      if (entity.kind.toLowerCase() === 'operation') {
+      if (entity.ref.kind.toLowerCase() === 'operation') {
         return entity as Operation;
       }
 
-      if (entity.kind.toLowerCase() === 'provider') {
+      if (entity.ref.kind.toLowerCase() === 'provider') {
         return entity as Provider;
       }
 
-      if (entity.kind.toLowerCase() === 'repository') {
+      if (entity.ref.kind.toLowerCase() === 'repository') {
         return entity as unknown as Repository;
       }
 
-      if (entity.kind.toLowerCase() === 'template') {
+      if (entity.ref.kind.toLowerCase() === 'template') {
         return entity as unknown as Template;
       }
 

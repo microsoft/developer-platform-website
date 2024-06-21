@@ -4,18 +4,20 @@
 import { useIsAuthenticated } from '@azure/msal-react';
 import { Environment, Operation, Provider, Repository, Template } from '@developer-platform/entities';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { getEntities } from '../API';
+import { getEntitiesByKind } from '../API';
 
 export const useEntities = (kind: string) => {
   const isAuthenticated = useIsAuthenticated();
   const queryClient = useQueryClient();
 
+  kind = kind.toLowerCase();
+
   return useQuery({
-    queryKey: ['entities', kind.toLowerCase()],
+    queryKey: ['entities', kind],
     queryFn: async () => {
       console.log(`Fetching ${kind} entities`);
 
-      const { entities, providerAuth } = await getEntities(kind);
+      const { entities, providerAuth } = await getEntitiesByKind(kind);
 
       console.log(`Found ${entities.length} ${kind} entities`);
       console.log(`Found ${providerAuth.length} provider auths`);
@@ -24,23 +26,23 @@ export const useEntities = (kind: string) => {
         queryClient.setQueryData(['providers', 'auth'], providerAuth);
       }
 
-      if (kind.toLowerCase() === 'environment') {
+      if (kind === 'environment') {
         return entities as Environment[];
       }
 
-      if (kind.toLowerCase() === 'operation') {
+      if (kind === 'operation') {
         return entities as Operation[];
       }
 
-      if (kind.toLowerCase() === 'provider') {
+      if (kind === 'provider') {
         return entities as Provider[];
       }
 
-      if (kind.toLowerCase() === 'repository') {
+      if (kind === 'repository') {
         return entities as unknown as Repository[];
       }
 
-      if (kind.toLowerCase() === 'template') {
+      if (kind === 'template') {
         return entities as unknown as Template[];
       }
 

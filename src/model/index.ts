@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 export * from './CreatePayload';
+export * from './EntityRef';
 export * from './Extensions';
 export * from './GraphGroup';
 export * from './GraphPrincipal';

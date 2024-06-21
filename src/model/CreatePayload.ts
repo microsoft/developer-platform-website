@@ -3,4 +3,4 @@
 
 import { EntityRef } from '@developer-platform/entities';
 
-export type CreatePayload = { ref: EntityRef; input: any };
+export type CreatePayload = { ref: EntityRef; input: unknown };

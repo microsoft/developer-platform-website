@@ -22,13 +22,6 @@ export const CreateForm: React.FC<ICreateFormProps> = () => {
 
     const { data: templates, isLoading } = useEntities('template');
 
-    // const { data: tt } = useEntity({
-    //     kind: 'template',
-    //     provider: provider ?? '',
-    //     namespace: namespace ?? '',
-    //     name: name ?? '',
-    // });
-
     const create = useTemplateCreate();
 
     const [template, setTemplate] = useState<Template>();
@@ -50,7 +43,7 @@ export const CreateForm: React.FC<ICreateFormProps> = () => {
     const onSubmit = async (
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         data: IChangeEvent<any, RJSFSchema, any>,
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         _event: FormEvent<any>
     ) => {
         console.log('Data submitted: ', data.formData);

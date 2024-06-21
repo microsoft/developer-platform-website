@@ -16,8 +16,8 @@ import AzureLogo from '../assets/azure.svg?react';
 
 const getProviderIcon = (provider?: string) => {
     switch (provider?.toLowerCase()) {
-        case 'devcenter.azure.com': return <SvgIcon fontSize='inherit' component={AzureLogo} />;
-        case 'github.com': return <GitHubIcon fontSize='inherit' />;
+        case 'devcenter.azure.com': return <SvgIcon fontSize='large' component={AzureLogo} />;
+        case 'github.com': return <GitHubIcon fontSize='large' />;
     }
     return undefined;
 };
@@ -54,37 +54,40 @@ export const TemplateCard: React.FC<ITemplateCardProps> = (props) => {
 
     return (
         <Card sx={{ p: 1 }}>
-            <CardHeader sx={{ pt: theme.spacing(3) }}
-                action={<IconButton onClick={handleMenuClick} aria-label='settings'>
-                    <MoreVertIcon />
-                </IconButton>}
-                title={(
-                    <Stack direction='row' pb={theme.spacing(1)} spacing={1} alignItems='center'>
-                        <strong>{template.metadata!.title ?? template.metadata!.name}</strong>
-                        {getProviderIcon(template.metadata!.provider)}
-                    </Stack>
-                )}
+            <CardHeader sx={{ pt: theme.spacing(3), minHeight:'92px', maxHeight:'92px' }}
+                avatar={getProviderIcon(template.metadata!.provider)}
+                action={
+                    <IconButton onClick={handleMenuClick} aria-label='settings'>
+                        <MoreVertIcon />
+                    </IconButton>
+                }
+                title={template.metadata!.title ?? template.metadata!.name}
+                titleTypographyProps={{ fontSize: 'large'}}
+                // subheader={template.kind}
+                // subheaderTypographyProps={{ fontSize: 'small' }}
             />
             <Divider />
             <CardContent sx={{ pt: 2 }}>
-                <Typography variant='subtitle2' gutterBottom component='div'
-                    minHeight={template.metadata.tags ? '150px' : '230px'}
-                    maxHeight={template.metadata.tags ? '150px' : '230px'}>
+                <Typography variant='subtitle2' gutterBottom component='div' overflow='scroll'
+                    minHeight={template.metadata.tags ? '230px' : '260px'}
+                    maxHeight={template.metadata.tags ? '230px' : '260px'}>
                     {template.metadata.description}
                 </Typography>
 
-                {template.metadata.tags && (
-                    <Stack pb='20px'>
-                        <Typography variant='overline' display='block' gutterBottom component='div'>
-                            Tags
-                        </Typography>
-                        <Stack direction='row' spacing={1}>
+                <Stack pb='18px' pt='10px'
+                    minHeight={template.metadata.tags ? '90px' : '60px'}
+                    maxHeight={template.metadata.tags ? '90px' : '60px'}>
+                    <Typography variant='overline' display='block' gutterBottom component='div'>
+                        Tags
+                    </Typography>
+                    {template.metadata.tags && (
+                        <Stack direction='row'  overflow='scroll' spacing={1}>
                             {template.metadata.tags.map((tag, index) => (
                                 <Chip key={index} label={tag} size='small' color='secondary' variant="outlined" />
                             ))}
                         </Stack>
-                    </Stack>
-                )}
+                    )}
+                </Stack>
 
             </CardContent>
             <CardActions sx={{justifyContent: 'space-between', paddingBottom: theme.spacing(2)}}>

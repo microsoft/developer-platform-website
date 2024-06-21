@@ -10,11 +10,10 @@ import { Card, CardActions, CardContent, CardHeader, Chip, Divider, IconButton, 
 import React from 'react';
 import AzureLogo from '../assets/azure.svg?react';
 
-
 const getProviderIcon = (provider?: string) => {
     switch (provider?.toLowerCase()) {
-        case 'devcenter.azure.com': return <SvgIcon fontSize='inherit' component={AzureLogo} />;
-        case 'github.com': return <GitHubIcon fontSize='inherit' />;
+        case 'devcenter.azure.com': return <SvgIcon fontSize='large' component={AzureLogo} />;
+        case 'github.com': return <GitHubIcon fontSize='large' />;
     }
     return undefined;
 };
@@ -41,34 +40,42 @@ export const EntityCard: React.FC<IEntityCardProps> = (props) => {
         setMenuAnchorEl(null);
     };
 
+    const spacingMultiplier = (space: number) => {
+        if (entity.metadata.tags)
+            space -= 30;
+        if (entity.metadata.labels)
+            space -= 90;
+        return `${space}px`;
+    };
+
     return (
         <Card sx={{ p: 1 }}>
-            <CardHeader sx={{ pt: theme.spacing(3) }}
-                action={<IconButton onClick={handleMenuClick} aria-label='settings'>
-                    <MoreVertIcon />
-                </IconButton>}
-                title={(
-                    <Stack direction='row' pb={theme.spacing(1)} spacing={1} alignItems='center'>
-                        <strong>{entity.metadata!.title ?? entity.metadata!.name}</strong>
-                        {getProviderIcon(entity.metadata!.provider)}
-                    </Stack>
-                )}
+            <CardHeader sx={{ pt: theme.spacing(3), minHeight:'92px', maxHeight:'92px' }}
+                avatar={getProviderIcon(entity.metadata!.provider)}
+                action={
+                    <IconButton onClick={handleMenuClick} aria-label='settings'>
+                        <MoreVertIcon />
+                    </IconButton>
+                }
+                title={(entity.metadata!.title ?? entity.metadata!.name)}
+                titleTypographyProps={{ fontSize: 'large'}}
             />
             <Divider />
             <CardContent sx={{ pt: 2 }}>
-                {entity.metadata.description && (
-                    <Typography variant='subtitle2' gutterBottom component='div'
-                        minHeight={entity.metadata.labels ? '100px' : '180px'}
-                        maxHeight={entity.metadata.labels ? '100px' : '180px'}>
-                        {entity.metadata.description}
-                    </Typography>
-                )}
+                <Typography variant='subtitle2' gutterBottom component='div' overflow='scroll'
+                    minHeight={spacingMultiplier(230)}
+                    maxHeight={spacingMultiplier(230)}>
+                    {entity.metadata.description}
+                </Typography>
 
-                {entity.metadata.labels && (
-                    <Stack pb='20px'>
-                        <Typography variant='overline' display='block' gutterBottom component='div'>
-                            {/* Labels */}
-                        </Typography>
+                <Stack pb='18px' pt='10px'
+                    minHeight={entity.metadata.labels ? '150px' : '60px'}
+                    maxHeight={entity.metadata.labels ? '150px' : '60px'}>
+                    <Typography variant='overline' display='block' gutterBottom component='div'>
+                        Labels
+                    </Typography>
+                    {entity.metadata.labels && (
+                        <Stack overflow='scroll'>
                             {Object.keys(entity.metadata.labels).map((label, index) => label.endsWith('resource-group-id') ? <></> : (
                                 <Stack direction='row' spacing={1} alignItems='baseline' justifyContent='flex-start' key={entity.ref.name + label + index}>
                                     <Typography variant='subtitle2' color={theme.palette.text.primary}>
@@ -79,37 +86,27 @@ export const EntityCard: React.FC<IEntityCardProps> = (props) => {
                                     </Typography>
                                 </Stack>
                             ))}
-                    </Stack>
-                )}
+                        </Stack>
+                    )}
+                </Stack>
 
-                {entity.metadata.tags && (
-                    <Stack pb='20px'>
-                        <Typography variant='overline' display='block' gutterBottom component='div'>
-                            Tags
-                        </Typography>
-                        <Stack direction='row' spacing={1}>
+                <Stack pb='18px' pt='10px'
+                    minHeight={entity.metadata.tags ? '90px' : '60px'}
+                    maxHeight={entity.metadata.tags ? '90px' : '60px'}>
+                    <Typography variant='overline' display='block' gutterBottom component='div'>
+                        Tags
+                    </Typography>
+                    {entity.metadata.tags && (
+                        <Stack direction='row' overflow='scroll' spacing={1}>
                             {entity.metadata.tags.map((tag, index) => (
                                 <Chip key={entity.ref.name + tag + index} label={tag} size='small' color='secondary' variant="outlined" />
                             ))}
                         </Stack>
-                    </Stack>
-                )}
+                    )}
+                </Stack>
             </CardContent>
 
-            <CardActions sx={{
-                justifyContent: entity.spec.creates ? 'space-between' : 'flex-end',
-                paddingBottom: theme.spacing(2)
-            }}>
-                {entity.spec.creates && (
-                    <Stack pl={1}>
-                        <Stack direction='row' spacing={1}>
-                            {/* {entity.spec.creates?.map((plan, index) => (
-                                <Chip key={index} label={plan.kind} color='primary' variant="outlined" />
-                            ))} */}
-                        </Stack>
-                    </Stack>
-                )}
-
+            <CardActions>
                 <Menu
                     open={menuOpen}
                     anchorEl={menuAnchorEl}
@@ -125,7 +122,6 @@ export const EntityCard: React.FC<IEntityCardProps> = (props) => {
                         See existing
                     </MenuItem>
                 </Menu>
-
             </CardActions>
         </Card>
     );

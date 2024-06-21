@@ -3,7 +3,7 @@
 
 import { Entity, EntityRef, Operation, ProviderAuth, ProviderLogin } from '@developer-platform/entities';
 import { Auth } from './Auth';
-import { getProviderAuths } from './model';
+import { getEntityRef, getProviderAuths } from './model';
 
 const _getApiUrl = () => {
   // allow for injected value (i.e. string replacement)
@@ -49,28 +49,21 @@ export const getEntity = async (ref: EntityRef): Promise<Entity> => {
   const response = await callApi(`entities/${ref.kind}/${ref.provider}/${ref.namespace ?? 'default'}/${ref.name}`);
 
   const entity = (await response.json()) as Entity;
-  entity.ref = {
-    kind: entity.kind.toLowerCase(),
-    provider: entity.metadata.provider.toLowerCase(),
-    namespace: entity.metadata.namespace?.toLowerCase() ?? 'default',
-    name: entity.metadata.name.toLowerCase(),
-  };
+  entity.ref = getEntityRef(entity);
 
   return entity;
 };
 
-export const getEntities = async (kind: string): Promise<{ entities: Entity[]; providerAuth: ProviderAuth[] }> => {
-  const response = await callApi(`entities/${kind}`);
+export const getEntitiesByKind = async (
+  kind: string
+): Promise<{ entities: Entity[]; providerAuth: ProviderAuth[] }> => {
+  const path = `entities/${kind}`;
+  const response = await callApi(path);
 
   const entities = (await response.json()) as Entity[];
 
   for (const entity of entities) {
-    entity.ref = {
-      kind: entity.kind.toLowerCase(),
-      provider: entity.metadata.provider.toLowerCase(),
-      namespace: entity.metadata.namespace?.toLowerCase() ?? 'default',
-      name: entity.metadata.name.toLowerCase(),
-    };
+    entity.ref = getEntityRef(entity);
   }
 
   const providerAuth = getProviderAuths(response.headers);
@@ -78,7 +71,7 @@ export const getEntities = async (kind: string): Promise<{ entities: Entity[]; p
   return { entities, providerAuth };
 };
 
-export const create = async (ref: EntityRef, input: unknown): Promise<Operation> => {
+export const create = async (ref: EntityRef, input: unknown): Promise<Entity | Operation> => {
   const url = `${apiUrl}/entities/template/${ref.provider}/${ref.namespace ?? 'default'}/${ref.name}`;
 
   try {
@@ -100,16 +93,15 @@ export const create = async (ref: EntityRef, input: unknown): Promise<Operation>
       console.error(response);
     }
 
-    const operation = (await response.json()) as Operation;
+    const entity = (await response.json()) as Entity;
 
-    operation.ref = {
-      kind: operation.kind.toLowerCase(),
-      provider: operation.metadata.provider.toLowerCase(),
-      namespace: operation.metadata.namespace?.toLowerCase() ?? 'default',
-      name: operation.metadata.name.toLowerCase(),
-    };
+    entity.ref = getEntityRef(entity);
 
-    return operation;
+    if (entity.kind.toLowerCase() === 'operation') {
+      return entity as Operation;
+    }
+
+    return entity;
   } catch (error) {
     console.error(error);
     throw error;
