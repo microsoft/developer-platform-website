@@ -22,7 +22,7 @@ export const TemplatesView: React.FC<ITemplatesViewProps> = () => {
     return (
         <Grid container spacing={4} >
             {templates?.map(template => (
-                <Grid item xs={12} sm={12} md={6} lg={4} xl={3} key={`${template.ref.kind}:${template.ref.provider}/${template.ref.namespace}/${template.ref.name}`}>
+                <Grid item xs={12} sm={12} md={6} lg={4} xl={3} key={template.ref.id}>
                     <TemplateCard template={template as Template} />
                 </Grid>
             ))}
